@@ -52,6 +52,9 @@ public:
 
 	QRectF boundingRect() const;
 	void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
+	inline int height() const { return height_val; }
+	inline int width() const { return width_val; }
+	inline int id() const { return m_id; }
 
 protected:
 	void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -59,10 +62,10 @@ protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 private:
-	int id;
+	int m_id;
 	QColor color;
 	QVector<QPointF> stuff;
-	const int height_val = 40, width_val = 40;
+	const int height_val = 60, width_val = 60;
 };
 
 #endif // CHIP_H

@@ -45,17 +45,18 @@
 
 KeyPoint::KeyPoint(const QColor &color, int x)
 {
-	this->id = x;
+	this->m_id = x;
 	this->color = color;
-	setZValue(id % 2);
+	//setZValue(id);
 
 	setFlags(ItemIsSelectable | ItemIsMovable);
 	setAcceptHoverEvents(true);
+	setCursor(Qt::OpenHandCursor);
 }
 
 QRectF KeyPoint::boundingRect() const
 {
-	return QRectF(0, 0, width_val, height_val);
+	return QRectF(-10, -10, width_val + 20, height_val + 20);
 }
 
 void KeyPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
@@ -82,13 +83,15 @@ void KeyPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 	QPen oldPen = painter->pen();
 	QPen pen = oldPen;
-	int width = 0;
+	int width = 2;
 	if (option->state & QStyle::State_Selected)
 		width += 2;
 
 	pen.setWidth(width);
-	QBrush b = painter->brush();
+	pen.setColor(QColor(0, 255, 255, 192));
+	QBrush b(QColor(255, 0, 0));//painter->brush();
 	painter->setBrush(QBrush(fillColor.dark(option->state & QStyle::State_Sunken ? 120 : 100)));
+	painter->setPen(pen);
 
 	//painter->drawRect(QRect(14, 14, 79, 39));
 	painter->drawEllipse(QRect(0, 0, width_val, height_val));
@@ -105,11 +108,11 @@ void KeyPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 	if (lod > 0.001)
 	{
 		int fontsize = 14;
-		QFont font("Times", fontsize);
+		QFont font("Consolas", fontsize);
 		font.setStyleStrategy(QFont::ForceOutline);
 		painter->setFont(font);
 		painter->save();//
-		painter->drawText(width_val / 2 - fontsize * 3 / 4, height_val / 2 + fontsize / 2, QString("%1").arg(id));
+		painter->drawText(width_val / 2 - fontsize * 3 / 4, height_val / 2 + fontsize / 2, QString("%1").arg(m_id, 2, 10, QLatin1Char('0')));
 		painter->restore();
 	}
 
@@ -141,6 +144,7 @@ void KeyPoint::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, 
 
 void KeyPoint::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+	setCursor(Qt::ClosedHandCursor);
 	QGraphicsItem::mousePressEvent(event);
 	update();
 }
@@ -154,5 +158,6 @@ void KeyPoint::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void KeyPoint::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
 	QGraphicsItem::mouseReleaseEvent(event);
+	setCursor(Qt::OpenHandCursor);
 	update();
 }

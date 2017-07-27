@@ -24,6 +24,7 @@ public slots:
 public:
 	inline void set_filelist(const QStringList& qsl) { filelist = qsl; }
 	void show_image_at(int idx);
+	void save_bones();
 
 Q_SIGNALS:
 	void send_coord(int, int);
@@ -32,6 +33,8 @@ Q_SIGNALS:
 private:
 	void render(const QString& s = QString());
 	void load_template(int h, int w);
+	void load_pts_file(const std::string& filename);
+
 
 private:
 	QGraphicsScene* sc;
