@@ -30,7 +30,7 @@
     <property name="verticalSpacing">
      <number>2</number>
     </property>
-    <item row="6" column="6">
+    <item row="5" column="3">
      <layout class="QGridLayout" name="grid_layout_exit">
       <property name="sizeConstraint">
        <enum>QLayout::SetDefaultConstraint</enum>
@@ -75,7 +75,7 @@
       </item>
      </layout>
     </item>
-    <item row="4" column="6">
+    <item row="3" column="3">
      <widget class="QTabWidget" name="tbwgt_display_settings">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
@@ -116,7 +116,7 @@
        <enum>QTabWidget::Rounded</enum>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="wgt_display">
        <attribute name="title">
@@ -389,7 +389,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="1" colspan="5">
+    <item row="0" column="1" colspan="2">
      <widget class="QLineEdit" name="line_edit_video_path">
       <property name="font">
        <font>
@@ -402,7 +402,7 @@
       </property>
      </widget>
     </item>
-    <item row="0" column="6">
+    <item row="0" column="3">
      <layout class="QGridLayout" name="grid_layout_load">
       <item row="1" column="0">
        <widget class="QPushButton" name="pb_load_video">
@@ -420,7 +420,7 @@
       </item>
      </layout>
     </item>
-    <item row="5" column="6">
+    <item row="4" column="3">
      <widget class="QTextBrowser" name="text_brower_show_text">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
@@ -430,22 +430,28 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="0" rowspan="4" colspan="6">
-     <widget class="QWidget" name="MyViewer" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item row="3" column="0" rowspan="3" colspan="3">
+     <widget class="QGraphicsView" name="gfx_view_canvas">
+      <property name="backgroundBrush">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>64</red>
+         <green>128</green>
+         <blue>128</blue>
+        </color>
+       </brush>
       </property>
-      <property name="minimumSize">
-       <size>
-        <width>640</width>
-        <height>480</height>
-       </size>
+      <property name="foregroundBrush">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>255</red>
+         <green>170</green>
+         <blue>255</blue>
+        </color>
+       </brush>
       </property>
-      <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
+      <property name="resizeAnchor">
+       <enum>QGraphicsView::AnchorUnderMouse</enum>
       </property>
      </widget>
     </item>
@@ -460,25 +466,20 @@
      <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFile">
+   <widget class="QMenu" name="menu_file">
     <property name="title">
      <string>File</string>
     </property>
     <addaction name="action_open"/>
     <addaction name="action_exit"/>
    </widget>
-   <addaction name="menuFile"/>
+   <addaction name="menu_file"/>
   </widget>
   <widget class="QStatusBar" name="status_bar">
    <property name="sizeGripEnabled">
     <bool>true</bool>
    </property>
   </widget>
-  <action name="actionExit">
-   <property name="text">
-    <string>Exit</string>
-   </property>
-  </action>
   <action name="action_open">
    <property name="text">
     <string>Open</string>

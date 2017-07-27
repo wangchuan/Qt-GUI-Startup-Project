@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.6.2
+** Created by: Qt User Interface Compiler version 5.7.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -15,6 +15,7 @@
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
 #include <QtWidgets/QDoubleSpinBox>
+#include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -29,6 +30,8 @@
 #include <QtWidgets/QTabWidget>
 #include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QWidget>
+
+#include "Viewer.h"
 
 QT_BEGIN_NAMESPACE
 
@@ -77,7 +80,7 @@ public:
     QPushButton *pb_load_video;
     QPushButton *pb_run_camera;
     QTextBrowser *text_brower_show_text;
-    QWidget *MyViewer;
+    Viewer *gfx_view_canvas;
     QMenuBar *menu_bar;
     QMenu *menuFile;
     QStatusBar *status_bar;
@@ -127,7 +130,7 @@ public:
         grid_layout_exit->addWidget(pb_quit, 0, 1, 1, 1);
 
 
-        gridLayout_3->addLayout(grid_layout_exit, 6, 6, 1, 1);
+        gridLayout_3->addLayout(grid_layout_exit, 5, 3, 1, 1);
 
         tbwgt_display_settings = new QTabWidget(wgt_central);
         tbwgt_display_settings->setObjectName(QStringLiteral("tbwgt_display_settings"));
@@ -300,7 +303,7 @@ public:
 
         tbwgt_display_settings->addTab(wgt_other, QString());
 
-        gridLayout_3->addWidget(tbwgt_display_settings, 4, 6, 1, 1);
+        gridLayout_3->addWidget(tbwgt_display_settings, 3, 3, 1, 1);
 
         lb_file = new QLabel(wgt_central);
         lb_file->setObjectName(QStringLiteral("lb_file"));
@@ -320,7 +323,7 @@ public:
         font2.setItalic(true);
         line_edit_video_path->setFont(font2);
 
-        gridLayout_3->addWidget(line_edit_video_path, 0, 1, 1, 5);
+        gridLayout_3->addWidget(line_edit_video_path, 0, 1, 1, 2);
 
         grid_layout_load = new QGridLayout();
         grid_layout_load->setObjectName(QStringLiteral("grid_layout_load"));
@@ -335,7 +338,7 @@ public:
         grid_layout_load->addWidget(pb_run_camera, 1, 1, 1, 1);
 
 
-        gridLayout_3->addLayout(grid_layout_load, 0, 6, 1, 1);
+        gridLayout_3->addLayout(grid_layout_load, 0, 3, 1, 1);
 
         text_brower_show_text = new QTextBrowser(wgt_central);
         text_brower_show_text->setObjectName(QStringLiteral("text_brower_show_text"));
@@ -345,19 +348,16 @@ public:
         sizePolicy5.setHeightForWidth(text_brower_show_text->sizePolicy().hasHeightForWidth());
         text_brower_show_text->setSizePolicy(sizePolicy5);
 
-        gridLayout_3->addWidget(text_brower_show_text, 5, 6, 1, 1);
+        gridLayout_3->addWidget(text_brower_show_text, 4, 3, 1, 1);
 
-        MyViewer = new QWidget(wgt_central);
-        MyViewer->setObjectName(QStringLiteral("MyViewer"));
-        QSizePolicy sizePolicy6(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy6.setHorizontalStretch(0);
-        sizePolicy6.setVerticalStretch(0);
-        sizePolicy6.setHeightForWidth(MyViewer->sizePolicy().hasHeightForWidth());
-        MyViewer->setSizePolicy(sizePolicy6);
-        MyViewer->setMinimumSize(QSize(640, 480));
-        MyViewer->setLayoutDirection(Qt::LeftToRight);
+        gfx_view_canvas = new Viewer(wgt_central);
+        gfx_view_canvas->setObjectName(QStringLiteral("gfx_view_canvas"));
+        QBrush brush(QColor(64, 66, 68, 255));
+        brush.setStyle(Qt::SolidPattern);
+        gfx_view_canvas->setBackgroundBrush(brush);
+        gfx_view_canvas->setResizeAnchor(QGraphicsView::AnchorUnderMouse);
 
-        gridLayout_3->addWidget(MyViewer, 3, 0, 4, 6);
+        gridLayout_3->addWidget(gfx_view_canvas, 3, 0, 3, 3);
 
         ARViewer->setCentralWidget(wgt_central);
         menu_bar = new QMenuBar(ARViewer);
@@ -377,8 +377,9 @@ public:
 
         retranslateUi(ARViewer);
 
-        tbwgt_display_settings->setCurrentIndex(1);
+        tbwgt_display_settings->setCurrentIndex(0);
 
+		connectSignals(ARViewer);
 
         QMetaObject::connectSlotsByName(ARViewer);
     } // setupUi
@@ -419,6 +420,11 @@ public:
         menuFile->setTitle(QApplication::translate("ARViewer", "File", 0));
     } // retranslateUi
 
+	void connectSignals(QMainWindow *ARViewer)
+	{
+		QObject::connect(gfx_view_canvas, SIGNAL(send_coord(int,int)), ARViewer, SLOT(update_status_bar(int, int)));
+		QObject::connect(action_open, SIGNAL(triggered()), ARViewer, SLOT(open()));
+	}
 };
 
 namespace Ui {

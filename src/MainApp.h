@@ -2,6 +2,7 @@
 #define _MAINAPP_H_
 
 #include "ui_mainwindow.h"
+#include <QWheelEvent>
 
 class MainApp : public QMainWindow
 {
@@ -10,6 +11,10 @@ class MainApp : public QMainWindow
 public:
 	MainApp();
 	~MainApp();
+
+public slots:
+	void update_status_bar(int x, int y);
+	void open();
 
 private:
 	Ui::ARViewer*				ui;
