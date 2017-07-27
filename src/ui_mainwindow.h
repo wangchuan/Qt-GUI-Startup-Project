@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.7.0
+** Created by: Qt User Interface Compiler version 5.6.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -38,7 +38,6 @@ QT_BEGIN_NAMESPACE
 class Ui_ARViewer
 {
 public:
-    QAction *actionExit;
     QAction *action_open;
     QAction *action_exit;
     QWidget *wgt_central;
@@ -82,7 +81,7 @@ public:
     QTextBrowser *text_brower_show_text;
     Viewer *gfx_view_canvas;
     QMenuBar *menu_bar;
-    QMenu *menuFile;
+    QMenu *menu_file;
     QStatusBar *status_bar;
 
     void setupUi(QMainWindow *ARViewer)
@@ -94,8 +93,6 @@ public:
         font.setFamily(QStringLiteral("Microsoft YaHei UI"));
         font.setPointSize(8);
         ARViewer->setFont(font);
-        actionExit = new QAction(ARViewer);
-        actionExit->setObjectName(QStringLiteral("actionExit"));
         action_open = new QAction(ARViewer);
         action_open->setObjectName(QStringLiteral("action_open"));
         action_exit = new QAction(ARViewer);
@@ -352,10 +349,17 @@ public:
 
         gfx_view_canvas = new Viewer(wgt_central);
         gfx_view_canvas->setObjectName(QStringLiteral("gfx_view_canvas"));
-        QBrush brush(QColor(64, 66, 68, 255));
+        gfx_view_canvas->viewport()->setProperty("cursor", QVariant(QCursor(Qt::CrossCursor)));
+        QBrush brush(QColor(64, 128, 128, 255));
         brush.setStyle(Qt::SolidPattern);
         gfx_view_canvas->setBackgroundBrush(brush);
+        QBrush brush1(QColor(255, 170, 255, 255));
+        brush1.setStyle(Qt::NoBrush);
+        gfx_view_canvas->setForegroundBrush(brush1);
+        gfx_view_canvas->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
         gfx_view_canvas->setResizeAnchor(QGraphicsView::AnchorUnderMouse);
+		gfx_view_canvas->setRenderHint(QPainter::Antialiasing);
+		gfx_view_canvas->setCacheMode(QGraphicsView::CacheBackground);
 
         gridLayout_3->addWidget(gfx_view_canvas, 3, 0, 3, 3);
 
@@ -363,31 +367,29 @@ public:
         menu_bar = new QMenuBar(ARViewer);
         menu_bar->setObjectName(QStringLiteral("menu_bar"));
         menu_bar->setGeometry(QRect(0, 0, 857, 21));
-        menuFile = new QMenu(menu_bar);
-        menuFile->setObjectName(QStringLiteral("menuFile"));
+        menu_file = new QMenu(menu_bar);
+        menu_file->setObjectName(QStringLiteral("menu_file"));
         ARViewer->setMenuBar(menu_bar);
         status_bar = new QStatusBar(ARViewer);
         status_bar->setObjectName(QStringLiteral("status_bar"));
         status_bar->setSizeGripEnabled(true);
         ARViewer->setStatusBar(status_bar);
 
-        menu_bar->addAction(menuFile->menuAction());
-        menuFile->addAction(action_open);
-        menuFile->addAction(action_exit);
+        menu_bar->addAction(menu_file->menuAction());
+        menu_file->addAction(action_open);
+        menu_file->addAction(action_exit);
 
         retranslateUi(ARViewer);
 
         tbwgt_display_settings->setCurrentIndex(0);
 
 		connectSignals(ARViewer);
-
         QMetaObject::connectSlotsByName(ARViewer);
     } // setupUi
 
     void retranslateUi(QMainWindow *ARViewer)
     {
         ARViewer->setWindowTitle(QApplication::translate("ARViewer", "Camera", 0));
-        actionExit->setText(QApplication::translate("ARViewer", "Exit", 0));
         action_open->setText(QApplication::translate("ARViewer", "Open", 0));
         action_exit->setText(QApplication::translate("ARViewer", "Exit", 0));
         pb_restart->setText(QApplication::translate("ARViewer", "Restart", 0));
@@ -417,12 +419,12 @@ public:
         line_edit_video_path->setText(QApplication::translate("ARViewer", "video file dir here", 0));
         pb_load_video->setText(QApplication::translate("ARViewer", "Load Video", 0));
         pb_run_camera->setText(QApplication::translate("ARViewer", "Run Camera", 0));
-        menuFile->setTitle(QApplication::translate("ARViewer", "File", 0));
+        menu_file->setTitle(QApplication::translate("ARViewer", "File", 0));
     } // retranslateUi
-
 	void connectSignals(QMainWindow *ARViewer)
 	{
-		QObject::connect(gfx_view_canvas, SIGNAL(send_coord(int,int)), ARViewer, SLOT(update_status_bar(int, int)));
+		QObject::connect(gfx_view_canvas, SIGNAL(send_coord(int, int)), ARViewer, SLOT(update_status_bar(int, int)));
+		QObject::connect(gfx_view_canvas, SIGNAL(send_filename(const QString&)), ARViewer, SLOT(update_window_title(const QString&)));
 		QObject::connect(action_open, SIGNAL(triggered()), ARViewer, SLOT(open()));
 	}
 };

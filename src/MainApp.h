@@ -14,11 +14,13 @@ public:
 
 public slots:
 	void update_status_bar(int x, int y);
+	void update_window_title(const QString& filename);
 	void open();
 
 private:
 	Ui::ARViewer*				ui;
 	//AlgoObj*					obj;
+	int key = -1, key_modified = -1;
 };
 
 #endif

@@ -8,12 +8,16 @@ MainApp::MainApp()
 {
 	ui = new Ui::ARViewer();
 	ui->setupUi(this);
+	QString temp("C:\\Users\\cwang\\Desktop\\qt-gui\\Qt-GUI-Startup-Project\\build\\test.jpg");
+	QStringList qlst;
+	qlst.push_back(temp);
+	ui->gfx_view_canvas->set_filelist(qlst);
+	ui->gfx_view_canvas->show_image_at(0);
 }
 
 MainApp::~MainApp()
 {
-	delete ui;
-	ui = NULL;
+	if (ui) { delete ui; ui = NULL; }
 }
 
 void MainApp::update_status_bar(int x, int y)
@@ -31,6 +35,10 @@ void MainApp::open()
 	{
 		ui->gfx_view_canvas->set_filelist(filelist);
 		ui->gfx_view_canvas->show_image_at(0);
-
 	}
+}
+
+void MainApp::update_window_title(const QString& filename)
+{
+	this->setWindowTitle(filename);
 }

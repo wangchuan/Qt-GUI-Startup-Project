@@ -7,9 +7,9 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 project(ARViewer)
 
 # Add QT: 
-set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.7.0/5.7/msvc2015_64/")
+set(CMAKE_PREFIX_PATH "C:/Qt/Qt5.3.0/5.3/msvc2013_64_opengl/")
 set(CMAKE_LIBRARY_PATH "C:/Program Files (x86)/Windows Kits/8.0/Lib/win8/um/x64")
-set(QTBIN_PATH "C:/Qt/Qt5.7.0/5.7/msvc2015_64/bin/")
+set(QTBIN_PATH "C:/Qt/Qt5.3.0/5.3/msvc2013_64_opengl/bin/")
 find_package(Qt5Widget)
 find_package(Qt5Gui)
 find_package(Qt5Xml)
