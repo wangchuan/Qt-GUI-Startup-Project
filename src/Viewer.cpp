@@ -168,6 +168,12 @@ void Viewer::load_pts_file(const std::string& filename)
 	ifstream ifile(filename);
 	if (!ifile)
 		return;
+	for (int i = 0; i < sc->items().size(); i++)
+	{
+		KeyPoint* p = dynamic_cast<KeyPoint*>(sc->items()[i]);
+		if (p)
+			sc->removeItem(p);
+	}
 	string line;
 	getline(ifile, line); // Version
 	getline(ifile, line); // n_points
